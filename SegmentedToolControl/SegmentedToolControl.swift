@@ -9,8 +9,8 @@
 import UIKit
 
 
-@objc public protocol SegmentedItemControlDelegate: AnyObject {
-	func segmentedItemControl(_ control: SegmentedItemControl, didSelectItem: SegmentedItem)
+@objc public protocol SegmentedToolControlDelegate: AnyObject {
+	func segmentedItemControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem)
 }
 
 open class SegmentedItem: NSObject {
@@ -102,7 +102,7 @@ open class SegmentedCategoryItem: NSObject {
 
 // it is not actually UIControl, if you like to make it a subclass of UIControl, be aware thre are some problems.
 
-open class SegmentedItemControl: UIView {
+open class SegmentedToolControl: UIView {
 
 	static let orientationKey = "orientation"
 	static let horizontalValue = "horizontal"
@@ -123,7 +123,7 @@ open class SegmentedItemControl: UIView {
 		}
 	}
 
-	@IBOutlet public weak var delegate: SegmentedItemControlDelegate?
+	@IBOutlet public weak var delegate: SegmentedToolControlDelegate?
 
 	public var direction: Direction = .right
 	public var itemSize: CGSize = CGSize(width: 32, height: 32)
@@ -192,8 +192,8 @@ open class SegmentedItemControl: UIView {
 	}
 
 	lazy private var setup: (()->()) = {
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(SegmentedItemControl.tapAction(_:)))
-		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(SegmentedItemControl.longPressAction(_:)))
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(SegmentedToolControl.tapAction(_:)))
+		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(SegmentedToolControl.longPressAction(_:)))
 		longPressGesture.minimumPressDuration = 0.3
 		self.addGestureRecognizer(tapGesture)
 		self.addGestureRecognizer(longPressGesture)

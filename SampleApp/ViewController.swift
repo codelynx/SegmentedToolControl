@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SegmentedItemControl
+import SegmentedToolControl
 
 class ViewController: UIViewController {
 
@@ -32,10 +32,10 @@ class ViewController: UIViewController {
 	static let topKey = "top"
 	static let bottomKey = "bottom"
 
-	@IBOutlet weak var leftControl: SegmentedItemControl!
-	@IBOutlet weak var rightControl: SegmentedItemControl!
-	@IBOutlet weak var bottomControl: SegmentedItemControl!
-	@IBOutlet weak var topControl: SegmentedItemControl!
+	@IBOutlet weak var leftControl: SegmentedToolControl!
+	@IBOutlet weak var rightControl: SegmentedToolControl!
+	@IBOutlet weak var bottomControl: SegmentedToolControl!
+	@IBOutlet weak var topControl: SegmentedToolControl!
 
 	static let itemSize = CGSize(width: 32, height: 32)
 
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
 		return SegmentedItem(identifier: identifier, image: UIImage(systemName: identifier)!.resizing(to: Self.itemSize)!)
 	}
 
-	private func setup(control: SegmentedItemControl, orientation: SegmentedItemControl.Orientation,  direction: SegmentedItemControl.Direction) {
+	private func setup(control: SegmentedToolControl, orientation: SegmentedToolControl.Orientation,  direction: SegmentedToolControl.Direction) {
 		control.itemSize = Self.itemSize
 		control.orientation = orientation
 		control.direction = direction
@@ -80,10 +80,10 @@ class ViewController: UIViewController {
 		self.setup(control: self.rightControl, orientation: .vertical, direction: .left)
 		self.setup(control: self.topControl, orientation: .horizontal, direction: .down)
 		self.setup(control: self.bottomControl, orientation: .horizontal, direction: .up)
-		self.title = String(describing: SegmentedItemControl.self)
+		self.title = String(describing: SegmentedToolControl.self)
 	}
 
-	var keyControlPairs: [String: SegmentedItemControl] {
+	var keyControlPairs: [String: SegmentedToolControl] {
 		return [
 			Self.leftKey: self.leftControl,
 			Self.rightKey: self.rightControl,
@@ -105,9 +105,9 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: SegmentedItemControlDelegate {
+extension ViewController: SegmentedToolControlDelegate {
 
-	func segmentedItemControl(_ control: SegmentedItemControl, didSelectItem: SegmentedItem) {
+	func segmentedItemControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
 		for (key, value) in self.keyControlPairs {
 			if control == value {
 				UserDefaults.standard.setValue(value.selectedItem.identifier, forKey: key)

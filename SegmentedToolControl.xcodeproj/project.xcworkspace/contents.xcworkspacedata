@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:SegmentedItemControl.xcodeproj">
+      location = "self:/Users/kyoshikawa/Projects/SegmentedItemControl/SegmentedToolControl.xcodeproj">
    </FileRef>
 </Workspace>
