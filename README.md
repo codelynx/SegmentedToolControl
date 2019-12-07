@@ -87,7 +87,7 @@ extension YourViewController: SegmentedToolControlDelegate {
 
 This project includes a sample iOS app to demonstrate how to use `SegmentedToolControl`.
 
-<img width="392" alt="image.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/65634/5ef29c20-9c67-c0f8-f1b8-1fb481641c77.png">
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/65634/94c6025b-a666-93d6-fa50-31cd686d3ed2.png" width="340"/>
 
 ### License
 
