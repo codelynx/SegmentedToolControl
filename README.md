@@ -12,7 +12,82 @@ Here is an example of `SegmentedToolControl`, it is placed vertically, and place
 
 <img src="https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F65634%2F0643ef1c-abc2-b034-e242-84c9796dac4a.png?ixlib=rb-1.2.2&auto=compress%2Cformat&gif-q=60&s=d0f3c5d8f0816d3c213812921357052b" width="200"/>
 
-At this moment, `SegmentedToolControl` can be placed in storyboard, but you will need to configure them by code.
+
+## Main Classes
+
+### SegmentedItem
+
+It is a representation of a tool item. Make sure image size matches to `SegmentedToolControl`'s `itemSize` property.
+
+```.swift
+	SegmentedItem(identifier: "paintbrush", image: UIImage(systemName: "paintbrush")
+```
+
+### SegmentedCategoryItem
+
+It represents a category or a group of sub items. There must be at least one `SegmentedItem` in `SegmentedCategoryItem`.
+
+```.swift
+    SegmentedCategoryItem(items: [
+        SegmentedItem(identifier: "hammer", image: UIImage(systemName: "hammer"),
+        SegmentedItem(identifier: "wrench", image: UIImage(systemName: "wrench")
+    ])
+```
+
+### SegmentedToolControl
+
+You may have to configure `SegmentedToolControl` by code. Here is an example of setting up this component by code.
+
+```.swift
+    let toolControl: SegmentedToolControl = ...
+    toolControl.itemSize = Self.itemSize
+    toolControl.orientation = .vertical
+    toolControl.direction = .right
+    toolControl.delegate = self
+    toolControl.segmentedCategoryItems = [
+        SegmentedCategoryItem(items: [
+            SegmentedItem(identifier: "hammer", image: UIImage(named: "hammer"),
+            SegmentedItem(identifier: "wrench", image: UIImage(named: "wrench")
+        ]),
+            SegmentedCategoryItem(items: [
+            SegmentedItem(identifier: "hare", image: UIImage(named: "hare"),
+            SegmentedItem(identifier: "tortoise", image: UIImage(named: "tortoise")
+        ])
+    ]
+```
+
+Here is the table of `SegmentedToolControl`'s property.
+
+
+| Property | Type | Description |
+| ---------| ---- | ----------- |
+| itemSize | CGSize | Icon size of an item |
+| orientation | Orientation | `vertical` or `horizontal` |
+| direction | Direction | `left`, `right`, `up`, `down` |
+| segmentedCategoryItems | [SegmentedCategoryItem] | indicate which `SegmentedCategoryItem` is selected. |
+| selectedItem | SegmentedItem | indicate which tool item is currently selected |
+
+### Delegate
+
+By implementing `SegmentedToolControlDelegate` protocol, you can handle when user select another item.
+
+```.swift
+extension YourViewController: SegmentedToolControlDelegate {
+	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
+        switch control.selectedItem.identifier {
+        case "hammer": // ...
+        case "wrench": // ...
+        // ...
+        }
+	}
+}
+```
+
+### Sample App
+
+This project includes a sample iOS app to demonstrate how to use `SegmentedToolControl`.
+
+<img width="392" alt="image.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/65634/5ef29c20-9c67-c0f8-f1b8-1fb481641c77.png">
 
 ### License
 
