@@ -107,7 +107,7 @@ class ViewController: UIViewController {
 
 extension ViewController: SegmentedToolControlDelegate {
 
-	func segmentedItemControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
+	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
 		for (key, value) in self.keyControlPairs {
 			if control == value {
 				UserDefaults.standard.setValue(value.selectedItem.identifier, forKey: key)

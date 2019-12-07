@@ -10,7 +10,7 @@ import UIKit
 
 
 @objc public protocol SegmentedToolControlDelegate: AnyObject {
-	func segmentedItemControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem)
+	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem)
 }
 
 open class SegmentedItem: NSObject {
@@ -157,7 +157,7 @@ open class SegmentedToolControl: UIView {
 		set {
 			assert(self.segmentedCategoryItems.contains(newValue))
 			_selectedSegmentItem = newValue
-			self.delegate?.segmentedItemControl(self, didSelectItem: newValue.selectedItem)
+			self.delegate?.segmentedToolControl(self, didSelectItem: newValue.selectedItem)
 			self.setNeedsDisplay()
 		}
 	}
