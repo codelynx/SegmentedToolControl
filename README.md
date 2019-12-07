@@ -67,23 +67,23 @@ Here is the table of `SegmentedToolControl`'s property.
 | segmentedCategoryItems | [SegmentedCategoryItem] | indicate which `SegmentedCategoryItem` is selected. |
 | selectedItem | SegmentedItem | indicate which tool item is currently selected |
 
-### Delegate
+## Delegate
 
 By implementing `SegmentedToolControlDelegate` protocol, you can handle when user select another item.
 
 ```.swift
 extension YourViewController: SegmentedToolControlDelegate {
-	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
+    func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
         switch control.selectedItem.identifier {
         case "hammer": // ...
         case "wrench": // ...
         // ...
         }
-	}
+    }
 }
 ```
 
-### Sample App
+## Sample App
 
 This project includes a sample iOS app to demonstrate how to use `SegmentedToolControl`.
 
