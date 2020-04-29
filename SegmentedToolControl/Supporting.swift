@@ -27,6 +27,11 @@ extension UIBezierPath {
 	}
 }
 
+extension CGPoint {
+	init(_ size: CGSize) {
+		self = CGPoint(x: size.width, y: size.height)
+	}
+}
 
 extension UIImage {
 	internal func invertingAlpha() -> UIImage? {
@@ -59,13 +64,13 @@ extension UIImage {
 		}
 		return nil
 	}
-	internal func resizing(to _size: CGSize) -> UIImage? {
-		let widthRatio = _size.width / size.width
-		let heightRatio = _size.height / size.height
+	internal func resizing(to newSize: CGSize) -> UIImage? {
+		let widthRatio = newSize.width / size.width
+		let heightRatio = newSize.height / size.height
 		let ratio = widthRatio < heightRatio ? widthRatio : heightRatio
 		let resizedSize = CGSize(width: size.width * ratio, height: size.height * ratio)
-		UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
-		draw(in: CGRect(origin: .zero, size: resizedSize))
+		UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+		draw(in: CGRect(origin: CGPoint((newSize - resizedSize) * 0.5), size: resizedSize))
 		let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return resizedImage

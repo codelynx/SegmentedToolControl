@@ -13,6 +13,7 @@ import UIKit
 	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem)
 }
 
+
 open class SegmentedItem: NSObject {
 
 	public let identifier: String
@@ -32,6 +33,7 @@ open class SegmentedItem: NSObject {
 	}
 
 }
+
 
 open class SegmentedItemView: UIView {
 
@@ -61,8 +63,14 @@ open class SegmentedItemView: UIView {
 	
 	public var image: UIImage? {
 		didSet {
-			self.imageView.image = self.image?.withRenderingMode(.alwaysTemplate)
-			self.imageView.highlightedImage = self.image?.invertingAlpha()?.withRenderingMode(.alwaysTemplate)
+			if let image = self.image?.resizing(to: CGSize(width: 32, height: 32)) {
+				self.addSubview(self.imageView)
+				self.imageView.image = image.withRenderingMode(.alwaysTemplate)
+				self.imageView.highlightedImage = image.invertingAlpha()?.withRenderingMode(.alwaysTemplate)
+			}
+			else {
+				self.imageView.removeFromSuperview()
+			}
 		}
 	}
 
@@ -85,6 +93,7 @@ open class SegmentedItemView: UIView {
 
 }
 
+
 open class SegmentedCategoryItem: NSObject {
 	public var items: [SegmentedItem]
 	public var selectedItem: SegmentedItem
@@ -99,6 +108,7 @@ open class SegmentedCategoryItem: NSObject {
 		return self.selectedItem.image
 	}
 }
+
 
 // it is not actually UIControl, if you like to make it a subclass of UIControl, be aware thre are some problems.
 

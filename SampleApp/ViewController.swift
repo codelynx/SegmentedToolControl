@@ -8,6 +8,7 @@
 import UIKit
 import SegmentedToolControl
 
+
 class ViewController: UIViewController {
 
 	static let hammerKey = "hammer"
@@ -107,7 +108,7 @@ class ViewController: UIViewController {
 
 extension ViewController: SegmentedToolControlDelegate {
 
-	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
+	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem item: SegmentedItem) {
 		for (key, value) in self.keyControlPairs {
 			if control == value {
 				UserDefaults.standard.setValue(value.selectedItem.identifier, forKey: key)
