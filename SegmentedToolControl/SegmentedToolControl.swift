@@ -247,8 +247,9 @@ open class SegmentedToolControl: UIView {
 				UIBezierPath(points: [CGPoint(x: self.bounds.minX, y: top), CGPoint(x: self.bounds.maxX, y: top)])?.stroke()
 				if y < self.segmentedCategoryItems.count {
 					let segment = self.segmentedCategoryItems[y]
+					let icon = segment.image.resizing(to: self.itemSize)!
 					let rect = CGRect(origin: CGPoint(x: self.bounds.minX + 1, y: top + 0.5), size: self.itemSize)
-					let image = (segment == self.selectedCategoryItem) ? segment.image.invertingAlpha() : segment.image
+					let image = (segment == self.selectedCategoryItem) ? icon.invertingAlpha() : icon
 					image?.withRenderingMode(.alwaysTemplate).draw(in: rect, blendMode: .normal, alpha: alpha)
 				}
 			}
@@ -261,8 +262,9 @@ open class SegmentedToolControl: UIView {
 				UIBezierPath(points: [CGPoint(x: left, y: self.bounds.minY), CGPoint(x: left, y: self.bounds.maxY)])?.stroke()
 				if x < self.segmentedCategoryItems.count {
 					let segment = self.segmentedCategoryItems[x]
+					let icon = segment.image.resizing(to: self.itemSize)!
 					let rect = CGRect(origin: CGPoint(x: left + 0.5, y: self.bounds.minY + 1), size: self.itemSize)
-					let image = (segment == self.selectedCategoryItem) ? segment.image.invertingAlpha() : segment.image
+					let image = (segment == self.selectedCategoryItem) ? icon.invertingAlpha() : icon
 					image?.withRenderingMode(.alwaysTemplate).draw(in: rect, blendMode: .normal, alpha: alpha)
 				}
 			}
