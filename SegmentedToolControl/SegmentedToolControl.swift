@@ -3,15 +3,11 @@
 //	SegmentedItemControl
 //
 //	Created by Kaz Yoshikawa on 5/6/19.
-//	Copyright © 2019 Electricwoods LLC. All rights reserved.
+//	Copyright © 2021 Electricwoods LLC. All rights reserved.
 //
 
 import UIKit
 
-
-@objc public protocol SegmentedToolControlDelegate: AnyObject {
-	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem)
-}
 
 open class SegmentedItem: NSObject {
 
@@ -102,7 +98,7 @@ open class SegmentedCategoryItem: NSObject {
 
 // it is not actually UIControl, if you like to make it a subclass of UIControl, be aware thre are some problems.
 
-open class SegmentedToolControl: UIView {
+open class SegmentedToolControl: UIControl {
 
 	static let orientationKey = "orientation"
 	static let horizontalValue = "horizontal"
@@ -122,8 +118,6 @@ open class SegmentedToolControl: UIView {
 			}
 		}
 	}
-
-	@IBOutlet public weak var delegate: SegmentedToolControlDelegate?
 
 	public var direction: Direction = .right
 	public var itemSize: CGSize = CGSize(width: 32, height: 32)
@@ -158,8 +152,8 @@ open class SegmentedToolControl: UIView {
 			assert(self.segmentedCategoryItems.contains(newValue))
 			if self._selectedSegmentItem != newValue {
 				self._selectedSegmentItem = newValue
-				self.setNeedsDisplay()
 			}
+			self.setNeedsDisplay()
 		}
 	}
 
@@ -185,7 +179,7 @@ open class SegmentedToolControl: UIView {
 		}
 	}
 	
-	public var isEnabled: Bool = true {
+	public override var isEnabled: Bool {
 		didSet {
 			self.isUserInteractionEnabled = self.isEnabled
 			self.setNeedsDisplay()
@@ -283,7 +277,7 @@ open class SegmentedToolControl: UIView {
 	@objc func tapAction(_ gesture: UIGestureRecognizer) {
 		if let index = segmentItemIndex(at: gesture.location(in: self)) {
 			self.selectedCategoryItem = self.segmentedCategoryItems[index]
-			self.delegate?.segmentedToolControl(self, didSelectItem: self.selectedCategoryItem.selectedItem)
+			self.sendActions(for: .valueChanged)
 		}
 	}
 
@@ -320,7 +314,7 @@ open class SegmentedToolControl: UIView {
 			if let selection = selection, let handlingSegment = handlingSegment {
 				handlingSegment.selectedItem = selection.item
 				self.selectedCategoryItem = handlingSegment
-				self.delegate?.segmentedToolControl(self, didSelectItem: self.selectedCategoryItem.selectedItem)
+				self.sendActions(for: .valueChanged)
 			}
 			self.subviews.forEach { $0.removeFromSuperview() }
 			self.handlingSegment = nil

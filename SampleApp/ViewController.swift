@@ -48,7 +48,6 @@ class ViewController: UIViewController {
 		control.itemSize = Self.itemSize
 		control.orientation = orientation
 		control.direction = direction
-		control.delegate = self
 		control.segmentedCategoryItems = [
 			SegmentedCategoryItem(items: [
 				self.makeSegmentedItem(Self.hammerKey),
@@ -95,7 +94,7 @@ class ViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
+		print(Self.self, #function)
 		for (key, control) in self.keyControlPairs {
 			if let identifier = UserDefaults.standard.value(forKey: key) as? String {
 				control.selectItem(with: identifier)
@@ -103,21 +102,12 @@ class ViewController: UIViewController {
 		}
 	}
 
-
-}
-
-extension ViewController: SegmentedToolControlDelegate {
-
-	func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem item: SegmentedItem) {
-		for (key, value) in self.keyControlPairs {
-			if control == value {
-				UserDefaults.standard.setValue(value.selectedItem.identifier, forKey: key)
-				break
-			}
+	@IBAction func segmentedToolControlAction(_ sender: SegmentedToolControl) {
+		if let (key, control) = self.keyControlPairs.filter({ $0.value == sender }).first {
+			UserDefaults.standard.setValue(control.selectedItem.identifier, forKey: key)
 		}
 	}
 }
-
 
 extension UIImage {
 	func resizing(to _size: CGSize) -> UIImage? {
