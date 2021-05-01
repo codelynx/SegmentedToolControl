@@ -67,20 +67,14 @@ Here is the table of `SegmentedToolControl`'s property.
 | segmentedCategoryItems | [SegmentedCategoryItem] | indicate which `SegmentedCategoryItem` is selected. |
 | selectedItem | SegmentedItem | indicate which tool item is currently selected |
 
-## Delegate
+## Target - Action
 
-By implementing `SegmentedToolControlDelegate` protocol, you can handle when user select another item.
+Just like UIControl, `SegmentedToolControl` fires `UIControl.Event.valueChanged` to targets.  You can use Interface Builder to wire action, but you must hook `value changed` to the target.
 
 ```.swift
-extension YourViewController: SegmentedToolControlDelegate {
-    func segmentedToolControl(_ control: SegmentedToolControl, didSelectItem: SegmentedItem) {
-        switch control.selectedItem.identifier {
-        case "hammer": // ...
-        case "wrench": // ...
-        // ...
-        }
-    }
-}
+	@IBAction func segmentedToolControlAction(_ sender: SegmentedToolControl) {
+		print(sender.selectedItem.identifier)
+	}
 ```
 
 ## Sample App
