@@ -32,11 +32,39 @@ class ViewController: UIViewController {
 	static let rightKey = "right"
 	static let topKey = "top"
 	static let bottomKey = "bottom"
+	
+	static let carKey = "car"
+	static let busKey = "bus"
+	static let tramKey = "tram"
+	static let bicycleKey = "bicycle"
+	static let walkKey = "figure.walk"
 
 	@IBOutlet weak var leftControl: SegmentedToolControl!
 	@IBOutlet weak var rightControl: SegmentedToolControl!
 	@IBOutlet weak var bottomControl: SegmentedToolControl!
 	@IBOutlet weak var topControl: SegmentedToolControl!
+	@IBOutlet weak var barButtonControl: SegmentedToolControl!
+
+	lazy var toolBarButtonItem: UIBarButtonItem = {
+		let control = SegmentedToolControl()
+		control.itemSize = CGSize(width: 27, height: 27)
+		control.orientation = .horizontal
+		control.direction = .down
+		control.segmentedCategoryItems = [
+			SegmentedCategoryItem(items: [
+				self.makeSegmentedItem(Self.carKey),
+				self.makeSegmentedItem(Self.busKey),
+				self.makeSegmentedItem(Self.tramKey),
+			]),
+			SegmentedCategoryItem(items: [
+				self.makeSegmentedItem(Self.bicycleKey),
+				self.makeSegmentedItem(Self.walkKey),
+			]),
+		]
+		control.backgroundColor = .systemBackground
+		control.sizeToFit()
+		return UIBarButtonItem(customView: control)
+	}()
 
 	static let itemSize = CGSize(width: 32, height: 32)
 
@@ -81,6 +109,7 @@ class ViewController: UIViewController {
 		self.setup(control: self.topControl, orientation: .horizontal, direction: .down)
 		self.setup(control: self.bottomControl, orientation: .horizontal, direction: .up)
 		self.title = String(describing: SegmentedToolControl.self)
+		self.navigationItem.rightBarButtonItems = [self.toolBarButtonItem]
 	}
 
 	var keyControlPairs: [String: SegmentedToolControl] {

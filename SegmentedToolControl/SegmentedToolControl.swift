@@ -119,15 +119,21 @@ open class SegmentedToolControl: UIControl {
 		}
 	}
 
-	public var direction: Direction = .right
-	public var itemSize: CGSize = CGSize(width: 32, height: 32)
+	public var direction: Direction = .right {
+		didSet { self.sizeToFit() }
+	}
+	public var itemSize: CGSize = CGSize(width: 32, height: 32) {
+		didSet { self.sizeToFit() }
+	}
 	
 	public enum Orientation: Int {
 		case vertical
 		case horizontal
 	}
 
-	public var orientation: Orientation = .vertical
+	public var orientation: Orientation = .vertical {
+		didSet { self.sizeToFit() }
+	}
 
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
@@ -153,6 +159,7 @@ open class SegmentedToolControl: UIControl {
 			if self._selectedSegmentItem != newValue {
 				self._selectedSegmentItem = newValue
 			}
+			self.sizeToFit()
 			self.setNeedsDisplay()
 		}
 	}
@@ -193,6 +200,7 @@ open class SegmentedToolControl: UIControl {
 		self.addGestureRecognizer(tapGesture)
 		self.addGestureRecognizer(longPressGesture)
 		self.clipsToBounds = false
+		self.backgroundColor = .systemBackground
 		return {}
 	}()
 
@@ -257,11 +265,22 @@ open class SegmentedToolControl: UIControl {
 		
 	}
 
+	open override func sizeToFit() {
+		self.setNeedsLayout()
+		self.bounds.size = self.intrinsicContentSize
+	}
+
 	override open var intrinsicContentSize: CGSize {
 		assert(segmentedCategoryItems.count > 0)
 		switch self.orientation {
-		case .vertical: return CGSize(width: itemSize.width + 2, height: CGFloat(self.segmentedCategoryItems.count) * (itemSize.height + 1) + 1)
-		case .horizontal: return CGSize(width: CGFloat(self.segmentedCategoryItems.count) * (itemSize.width + 1) + 1, height: itemSize.height + 2)
+		case .vertical:
+			let size = CGSize(width: itemSize.width + 2, height: CGFloat(self.segmentedCategoryItems.count) * (itemSize.height + 1) + 1)
+			print(Self.self, #function, ".vertical", size)
+			return size
+		case .horizontal:
+			let size = CGSize(width: CGFloat(self.segmentedCategoryItems.count) * (itemSize.width + 1) + 1, height: itemSize.height + 2)
+			print(Self.self, #function, ".horizontal", size)
+			return size
 		}
 	}
 
